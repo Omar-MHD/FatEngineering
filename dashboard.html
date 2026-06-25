@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | FatEng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #111;
+            color: #fff;
+            margin: 40px;
+        }
+        h1 { color: #2ecc71; text-align: center; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #1a1a1a;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: right;
+            border-bottom: 1px solid #333;
+        }
+        th { background-color: #2ecc71; color: #111; font-weight: bold; }
+        tr:hover { background-color: #252525; }
+        .no-data { text-align: center; padding: 20px; color: #888; }
+    </style>
+</head>
+<body>
+
+    <h1>📋 جدول الحجوزات الهندسي المباشر</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>الاسم الثلاثي</th>
+                <th>نوع الخدمة الهندسية</th>
+                <th>تاريخ الزيارة</th>
+                <th>توقيت الوصول</th>
+            </tr>
+        </thead>
+        <tbody id="appointmentsTable">
+            </tbody>
+    </table>
+
+    <script>
+        // دالة لجلب الحجوزات من السيرفر وعرضها في الجدول
+        async function loadAppointments() {
+            try {
+                const response = await fetch('http://localhost:3000/api/appointments');
+                const appointments = await response.json();
+                const tableBody = document.getElementById('appointmentsTable');
+                
+                tableBody.innerHTML = ''; // تنظيف الجدول أولاً
+
+                if (appointments.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="4" class="no-data">لا توجد حجوزات مسجلة حتى الآن.</td></tr>';
+                    return;
+                }
+
+                // إضافة كل حجز داخل سطر في الجدول
+                appointments.forEach(app => {
+                    const row = `
+                        <tr>
+                            <td>${app.fullName}</td>
+                            <td>${app.serviceType}</td>
+                            <td>${app.date}</td>
+                            <td>${app.time}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            } catch (error) {
+                console.error('خطأ في جلب البيانات:', error);
+            }
+        }
+
+        // تشغيل الدالة فور تحميل الصفحة
+        window.onload = loadAppointments;
+    </script>
+</body>
+</html>

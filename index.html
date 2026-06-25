@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FatEng | المنصة الذكية الشاملة</title>
+    
+    <!-- أيقونة الـ Favicon المتوهجة بديلة الكرة الأرضية -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 fill=%22%2310b981%22>▲</text></svg>">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- الشريط العلوي الذكي المحدث -->
+    <header>
+        <div class="container">
+            <div class="logo-area">
+                <div class="tech-logo">
+                    <span class="gear-tooth"></span>
+                    <span class="gear-tooth"></span>
+                    <span class="gear-center">▲</span>
+                </div>
+                <span class="brand-name">Fat<span class="green-text">Eng</span></span>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#welcome" class="nav-item active">🏠 الرئيسية</a></li>
+                    <li><a href="#about" class="nav-item">✨ من نحن</a></li>
+                    <li><a href="#engineers" class="nav-item">👷 طاقم المهندسين</a></li>
+                    <li><a href="#booking" class="nav-item">📅 حجز موعد</a></li>
+                    <li><a href="#contact" class="nav-item">📞 اتصل بنا</a></li>
+                    <li><a href="auth.html" class="logout-btn">🚪 خروج</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- طبقات الخلفيات المنفصلة (تمت إضافة خلفية لقسم الاتصال والدعم) -->
+    <div class="fixed-background-container">
+        <div id="bg-welcome" class="bg-layer active-bg"></div>
+        <div id="bg-about" class="bg-layer"></div>
+        <div id="bg-engineers" class="bg-layer"></div>
+        <div id="bg-booking" class="bg-layer"></div>
+        <div id="bg-contact" class="bg-layer"></div>
+        <div class="live-color-overlay"></div>
+    </div>
+
+    <!-- حاوية التمرير والقمط التلقائي الحديث -->
+    <main class="scroll-snap-container">
+
+        <!-- القسم الأول: الرئيسية -->
+        <section id="welcome" class="page-section" data-bg="bg-welcome">
+            <div class="hero-content">
+                <div class="welcome-badge">أهلاً بك في FatEng الذكية ✓</div>
+                <h1>منصة صيانة المصاعد والسلالم الكهربائية</h1>
+                <p>تصفح خدماتنا، تعرف على طاقم مهندسينا، أو قم بجدولة موعد صيانة فوري متاح على مدار الساعة عبر النزول لأسفل أو استخدام الشريط العلوي.</p>
+                <div class="scroll-indicator">
+                    <p>انزل لأسفل للاستكشاف</p>
+                    <div class="mouse-animation"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم الثاني: من نحن -->
+        <section id="about" class="page-section" data-bg="bg-about">
+            <div class="about-container">
+                <div class="about-header">
+                    <span class="about-mini-title">قصتنا ورؤيتنا</span>
+                    <h2>من هي منصة FatEng؟</h2>
+                </div>
+                <div class="about-content-grid">
+                    <div class="about-text-block">
+                        <h3>الريادة في الأنظمة الميكانيكية الذكية</h3>
+                        <p>تأسست <strong>FatEng</strong> لتكون القفزة النوعية الحديثة في عالم خدمات صيانة وإصلاح المصاعد والسلالم المتحركة. نحن لسنا مجرد شركة صيانة عادية، بل منصة هندسية متكاملة تدمج بين الذكاء البرمجي والخبرة الميكانيكية الميدانية الثقيلة لضمان أعلى معايير السلامة والأمان لمنشأتك.</p>
+                    </div>
+                    <div class="about-features-grid">
+                        <div class="feature-box">
+                            <span class="feature-icon">⚡</span>
+                            <h4>استجابة فورية</h4>
+                            <p>أنظمة طوارئ ذكية مجهزة لاستقبال البلاغات والتحرك الفوري على مدار الساعة.</p>
+                        </div>
+                        <div class="feature-box">
+                            <span class="feature-icon">🛡️</span>
+                            <h4>أمان مطلق</h4>
+                            <p>تطبيق صارم لمعايير الأمان العالمية الحاصلة على شهادات الجودة الفنية.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم الثالث: المهندسين -->
+        <section id="engineers" class="page-section" data-bg="bg-engineers">
+            <div class="section-title">
+                <h2>نخبة من كبار المهندسين والفنيين</h2>
+                <p>فريق طاقم FatEng مجهز ومصنف لضمان أعلى معايير الأمان للمنشآت</p>
+            </div>
+            <div class="engineers-grid">
+                <div class="eng-card">
+                    <div class="eng-avatar">👨‍💻</div>
+                    <h3>م. فيصل العتيبي</h3>
+                    <span class="badge-role">كبير مهندسي الأنظمة</span>
+                    <p>خبرة أكثر من 10 سنوات في البرمجة المتقدمة لوحات التحكم والمصاعد الذكية السريعة.</p>
+                </div>
+                <div class="eng-card">
+                    <div class="eng-avatar">👨‍🔧</div>
+                    <h3>م. كريم المصري</h3>
+                    <span class="badge-role">خبير هيدروليك ميكانيكي</span>
+                    <p>متخصص في صيانة ومعالجة الأدراج الكهربائية الكبيرة والسلالم المتحركة في المجمعات الضخمة.</p>
+                </div>
+                <div class="eng-card">
+                    <div class="eng-avatar">👷‍♂️</div>
+                    <h3>المهندس سليم طه</h3>
+                    <span class="badge-role">مشرف الجودة والأمان</span>
+                    <p>المسؤول الأول عن الفحص الدوري وإعطاء شهادات الجودة والأمان الصارمة للمنشآت.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- القسم الرابع: حجز الموعد -->
+        <section id="booking" class="page-section" data-bg="bg-booking">
+            <div class="cyber-booking-card">
+                <div class="card-header">
+                    <h2>جدولة طلب صيانة هندسية</h2>
+                    <p>أدخل تفاصيل الخدمة لتخصيص المهندس المناسب فوراً</p>
+                </div>
+                
+                <form id="appointmentForm" class="cyber-form">
+                    <div class="form-group-modern">
+                        <input type="text" id="fullName" required placeholder=" ">
+                        <label for="fullName">👤 الاسم الثلاثي للعميل</label>
+                        <span class="input-bar"></span>
+                    </div>
+                    
+                    <div class="form-group-modern select-group">
+                        <select id="serviceType" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="elevator-fix">🛠️ صيانة مصعد كهربائي - عطل وتوقف مفاجئ</option>
+                            <option value="stairs-fix">⚡ إصلاح سلم أو درج ميكانيكي متحرك</option>
+                            <option value="checkup">🔍 فحص الجودة الدوري واختبار أمان الطوارئ</option>
+                        </select>
+                        <label for="serviceType">⚙️ اختر نوع الخدمة الهندسية</label>
+                        <span class="input-bar"></span>
+                    </div>
+                    
+                    <div class="form-grid-2">
+                        <div class="form-group-modern">
+                            <input type="date" id="appointmentDate" required placeholder=" ">
+                            <label for="appointmentDate">📅 تاريخ الزيارة</label>
+                            <span class="input-bar"></span>
+                        </div>
+                        <div class="form-group-modern">
+                            <input type="time" id="appointmentTime" required placeholder=" ">
+                            <label for="appointmentTime">⏰ توقيت الوصول</label>
+                            <span class="input-bar"></span>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="cyber-submit-btn">
+                        <span class="btn-text">تأكيد طلب الصيانة الفوري</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- القسم الخامس والجديد: أرقام الدعم الفني والاتصال العصري -->
+        <section id="contact" class="page-section" data-bg="bg-contact">
+            <div class="contact-container">
+                <div class="contact-header">
+                    <span class="pulse-dot"></span>
+                    <h2>مركز الدعم الفني وغرفة العمليات الطارئة</h2>
+                    <p>في حال حدوث أي عطل طارئ أو استفسار ميكانيكي، مهندسونا مستعدون للرد الفوري 24/7</p>
+                </div>
+                
+                <div class="contact-cards-grid">
+                    <!-- كرت رقم الطوارئ الصارخ -->
+                    <div class="contact-card emergency">
+                        <div class="card-icon">🚨</div>
+                        <h3>خط الطوارئ الساخن</h3>
+                        <p class="desc">بلاغات تعطل المصاعد والاحتجاز الفوري</p>
+                        <a href="tel:920001234" class="phone-number">920001234</a>
+                        <span class="status-tag">استجابة خلال 15 دقيقة</span>
+                    </div>
+
+                    <!-- كرت الدعم الفني واتساب -->
+                    <div class="contact-card telegram">
+                        <div class="card-icon">💬</div>
+                        <h3>الدعم الهندسي (واتساب)</h3>
+                        <p class="desc">لإرسال صور الأعطال والتقارير الفنية</p>
+                        <a href="https://wa.me/966500000000" target="_blank" class="phone-number">+966 50 000 0000</a>
+                        <span class="status-tag active">متصل الآن</span>
+                    </div>
+
+                    <!-- كرت الإدارة والمبيعات -->
+                    <div class="contact-card corporate">
+                        <div class="card-icon">🏢</div>
+                        <h3>المبيعات وعقود الصيانة</h3>
+                        <p class="desc">لطلب عروض أسعار الشركات والمجمعات</p>
+                        <a href="mailto:support@fateng.com" class="phone-number">support@fateng.com</a>
+                        <span class="status-tag standard">من 8 ص حتى 4 م</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- إشعار الحجز الذكي -->
+    <div id="toastNotification" class="toast">
+        <div class="toast-content">
+            <div class="toast-icon">✓</div>
+            <div class="toast-message">
+                <h4>تم تسجيل طلبك بنجاح!</h4>
+                <p id="toastSummary"></p>
+            </div>
+        </div>
+        <div class="toast-progress"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <div id="toastNotification" class="toast-hidden"></div>
+</body>
+</html>
