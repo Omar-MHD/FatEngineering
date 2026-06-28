@@ -7,20 +7,19 @@ const dotenv = require('dotenv');
 dotenv.config();
 const app = express();
 
-// إعدادات الحماية وقراءة البيانات
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// تخديم ملفات الفرونت إيند من المجلد الرئيسي مباشرة
+// 1. تخديم الملفات الثابتة من المجلد الرئيسي مباشرة (مهم جداً أن يكون في الأعلى)
 app.use(express.static(__dirname));
 
-// رابط الاتصال بقاعدة البيانات
+// رابط قاعدة البيانات السحابية
 const dbURI = process.env.MONGO_URI || 'mongodb://localhost:27017/FatEngineering';
 
 mongoose.connect(dbURI)
   .then(() => console.log('✅ Connected to MongoDB Atlas successfully!'))
-  .catch((err) => console.error('❌ Database connection error:', err.message));
+  .catch((err) => console.error('❌ DB Connection Error:', err.message));
 
 // هيكل قاعدة البيانات لطلب الصيانة
 const AppointmentSchema = new mongoose.Schema({
@@ -33,7 +32,7 @@ const AppointmentSchema = new mongoose.Schema({
 
 const Appointment = mongoose.model('Appointment', AppointmentSchema);
 
-// استقبال الحجوزات من المتصفح
+// استقبال طلبات الحجز من المتصفح وحفظها
 app.post('/api/maintenance', async (req, res) => {
   try {
     const { clientName, serviceType, visitDate, arrivalTime } = req.body;
@@ -53,11 +52,11 @@ app.post('/api/maintenance', async (req, res) => {
   }
 });
 
-// إرسال الصفحة الرئيسية عند طلب الرابط
-app.get('*', (req, res) => {
+// 2. تخديم صفحة index.html فقط عند طلب الرابط الرئيسي للموقع '/'
+app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // المنفذ الخاص بـ Render
 const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log('🚀 Server running on port ' + PORT));
