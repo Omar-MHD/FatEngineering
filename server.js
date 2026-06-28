@@ -11,6 +11,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// 🌐 السطر السحري: تخديم ملفات الـ CSS والـ JS تلقائياً وبنوع الملف الصحيح من المجلد الرئيسي
+app.use(express.static(__dirname));
+
 // رابط قاعدة البيانات السحابية
 const dbURI = process.env.MONGO_URI || 'mongodb://localhost:27017/FatEngineering';
 
@@ -28,18 +31,6 @@ const AppointmentSchema = new mongoose.Schema({
 });
 
 const Appointment = mongoose.model('Appointment', AppointmentSchema);
-
-// 🛠️ تخديم ملف الـ CSS بشكل صريح وقاطع مع إرسال الـ Header الصحيح للمتصفح
-app.get('/style.css', (req, res) => {
-  res.set('Content-Type', 'text/css');
-  res.sendFile(path.join(__dirname, 'style.css'));
-});
-
-// 🛠️ تخديم ملف الـ JS بشكل صريح وقاطع
-app.get('/script.js', (req, res) => {
-  res.set('Content-Type', 'application/javascript');
-  res.sendFile(path.join(__dirname, 'script.js'));
-});
 
 // استقبال طلبات الحجز من المتصفح وحفظها
 app.post('/api/maintenance', async (req, res) => {
