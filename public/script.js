@@ -16,10 +16,10 @@ if (maintenanceForm) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    clientName: clientName,
-                    serviceType: serviceType,
-                    visitDate: visitDate,
-                    arrivalTime: arrivalTime
+                    clientName,
+                    serviceType,
+                    visitDate,
+                    arrivalTime
                 })
             });
 
