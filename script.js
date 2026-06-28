@@ -1,69 +1,42 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const appointmentForm = document.getElementById('appointmentForm');
-    const toast = document.getElementById('toastNotification');
+// كود التعامل مع الفورم وإرسال البيانات
+const maintenanceForm = document.getElementById('maintenanceForm'); // تأكد أن هذا الـ ID يطابق الـ form في الـ HTML
 
-    // دالة مطورة ومضمونة لإظهار الإشعار بتنسيق داخلي مباشر
-    function showToast(message, isSuccess = true) {
-        toast.textContent = message;
-        
-        // تطبيق التنسيقات مباشرة عبر الجافا سكربت لضمان ظهورها فوراً
-        toast.style.position = 'fixed';
-        toast.style.bottom = '30px';
-        toast.style.right = '30px';
-        toast.style.backgroundColor = isSuccess ? '#2ecc71' : '#e74c3c';
-        toast.style.color = 'white';
-        toast.style.padding = '15px 30px';
-        toast.style.borderRadius = '8px';
-        toast.style.fontFamily = 'Cairo, sans-serif';
-        toast.style.fontSize = '16px';
-        toast.style.boxShadow = '0 4px 15px rgba(0, 0, 0, 0.3)';
-        toast.style.zIndex = '1000';
-        toast.style.transition = 'all 0.5s ease-in-out';
-        
-        // تأثير الظهور (الانتقال الحركي)
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateY(0)';
+if (maintenanceForm) {
+    maintenanceForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-        // إخفاء الإشعار تلقائياً بعد 3 ثوانٍ
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transform = 'translateY(20px)';
-        }, 3000);
-    }
-    
-    if (appointmentForm) {
-        appointmentForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
+        // سحب القيم من خانات الإدخال بناءً على الـ ID في الـ HTML
+        const clientName = document.getElementById('clientName').value;
+        const serviceType = document.getElementById('serviceType').value;
+        const visitDate = document.getElementById('visitDate').value;
+        const arrivalTime = document.getElementById('arrivalTime').value;
 
-            const fullName = document.getElementById('fullName')?.value || '';
-            const serviceType = document.getElementById('serviceType')?.value || '';
-            const appointmentDate = document.getElementById('appointmentDate')?.value || '';
-            const appointmentTime = document.getElementById('appointmentTime')?.value || '';
+        try {
+            // إرسال البيانات برابط نسبي ليعمل محلياً وعلى Render بدون مشاكل
+            const response = await fetch('/api/maintenance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    clientName: clientName,
+                    serviceType: serviceType,
+                    visitDate: visitDate,
+                    arrivalTime: arrivalTime
+                })
+            });
 
-            try {
-                const response = await fetch('http://localhost:3000/api/booking', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ fullName, serviceType, appointmentDate, appointmentTime })
-                });
+            const data = await response.json();
 
-                const result = await response.json();
-
-                if (result.success) {
-                    // 🎉 استخدام الإشعار الذكي بدلاً من الـ alert التقليدي
-                    showToast('🎉 تم تسجيل حجزك بنجاح في المنصة الذكية!');
-                    
-                    // تنظيف الحقول وإعادة تصفير الفورم بشكل أنيق
-                    appointmentForm.reset(); 
-                } else {
-                    showToast('❌ فشل حفظ الحجز: ' + result.message, false);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                showToast('❌ حدث خطأ أثناء الاتصال بالخادم!', false);
+            if (data.success) {
+                alert('🎉 تم تأكيد طلب الصيانة الفوري بنجاح!');
+                maintenanceForm.reset(); // تفريغ الفورم بعد النجاح
+            } else {
+                alert('❌ حدث خطأ أثناء الحجز: ' + data.message);
             }
-        });
-    }
-});
+        } catch (error) {
+            console.error('Fetch Error:', error);
+            alert('❌ حدث خطأ أثناء الاتصال بالخادم!');
+        }
+    });
+}
