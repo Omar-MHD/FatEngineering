@@ -1,19 +1,19 @@
-// كود التعامل مع الفورم وإرسال البيانات
-const maintenanceForm = document.getElementById('maintenanceForm'); // تأكد أن هذا الـ ID يطابق الـ form في الـ HTML
+const maintenanceForm = document.getElementById('maintenanceForm');
+const statusMessage = document.getElementById('statusMessage');
 
 if (maintenanceForm) {
     maintenanceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // سحب القيم من خانات الإدخال بناءً على الـ ID في الـ HTML
+        // سحب البيانات من حقول الإدخال بدقة
         const clientName = document.getElementById('clientName').value;
         const serviceType = document.getElementById('serviceType').value;
         const visitDate = document.getElementById('visitDate').value;
         const arrivalTime = document.getElementById('arrivalTime').value;
 
         try {
-            // إرسال البيانات برابط نسبي ليعمل محلياً وعلى Render بدون مشاكل
-            const response = await fetch('/api/maintenance', {
+            // إرسال الطلب مباشرة برابط موقعك على Render لضمان الاتصال القطعي
+            const response = await fetch('https://fatengineering.onrender.com/api/maintenance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,14 +29,28 @@ if (maintenanceForm) {
             const data = await response.json();
 
             if (data.success) {
-                alert('🎉 تم تأكيد طلب الصيانة الفوري بنجاح!');
-                maintenanceForm.reset(); // تفريغ الفورم بعد النجاح
+                showStatus('🎉 تم تأكيد طلب الصيانة الفوري بنجاح وحفظه سحابياً!', 'success');
+                maintenanceForm.reset(); // تفريغ الخانات بعد نجاح العملية
             } else {
-                alert('❌ حدث خطأ أثناء الحجز: ' + data.message);
+                showStatus('❌ حدث خطأ أثناء الحجز: ' + data.message, 'error');
             }
         } catch (error) {
             console.error('Fetch Error:', error);
-            alert('❌ حدث خطأ أثناء الاتصال بالخادم!');
+            showStatus('❌ حدث خطأ أثناء الاتصال بالخادم!', 'error');
         }
     });
+}
+
+// دالة ذكية لإظهار وإخفاء التنبيهات بأسفل الشاشة وتلوينها
+function showStatus(text, type) {
+    if(statusMessage) {
+        statusMessage.textContent = text;
+        statusMessage.className = `status-popup ${type}`; // إضافة كلاس التلوين (success أو error)
+        statusMessage.classList.remove('hidden');
+        
+        // إخفاء الرسالة تلقائياً بعد 4 ثوانٍ
+        setTimeout(() => {
+            statusMessage.classList.add('hidden');
+        }, 4000);
+    }
 }

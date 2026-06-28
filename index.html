@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FatEng | جدولة طلب صيانة هندسية</title>
+    <title>منصة الذكية الشاملة | FatEng</title>
+    <!-- ربط ملف الستايل الخاص بك -->
     <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
 
+    <!-- القائمة العلوية Navbar -->
     <header>
         <div class="navbar">
             <div class="logo">FatEng <span>📐</span></div>
@@ -24,6 +26,7 @@
         </div>
     </header>
 
+    <!-- بطاقة جدولة طلب الصيانة -->
     <main class="container">
         <div class="form-card">
             <h2>جدولة طلب صيانة هندسية</h2>
@@ -31,15 +34,17 @@
 
             <form id="maintenanceForm">
                 
+                <!-- حقل اسم العميل -->
                 <div class="input-group">
                     <label for="clientName">👤 الاسم الثلاثي للعميل</label>
                     <input type="text" id="clientName" name="clientName" placeholder="عمر فؤاد المحمد" required>
                 </div>
 
+                <!-- حقل نوع الخدمة -->
                 <div class="input-group">
                     <label for="serviceType">⚡ اختر نوع الخدمة الهندسية</label>
                     <select id="serviceType" name="serviceType" required>
-                        <option value="" disabled selected>اختر الخدمة المطوبة...</option>
+                        <option value="" disabled selected>اختر الخدمة المطلوبة...</option>
                         <option value="إصلاح سلم أو درج ميكانيكي متحرك">إصلاح سلم أو درج ميكانيكي متحرك</option>
                         <option value="صيانة أنظمة تكييف مركزي">صيانة أنظمة تكييف مركزي</option>
                         <option value="استشارة هندسية ومخططات">استشارة هندسية ومخططات</option>
@@ -47,6 +52,7 @@
                     </select>
                 </div>
 
+                <!-- صف يحتوي على التاريخ والوقت -->
                 <div class="row">
                     <div class="input-group col">
                         <label for="visitDate">📅 تاريخ الزيارة</label>
@@ -59,11 +65,16 @@
                     </div>
                 </div>
 
+                <!-- زر الإرسال -->
                 <button type="submit" class="submit-btn">تأكيد طلب الصيانة الفوري</button>
             </form>
         </div>
     </main>
 
+    <!-- رسالة الخطأ أو النجاح المتحركة بالأسفل -->
+    <div id="statusMessage" class="status-popup hidden"></div>
+
+    <!-- ربط السكريبت المسؤول عن الـ Fetch والتفاعل -->
     <script src="script.js"></script>
 </body>
 </html>
