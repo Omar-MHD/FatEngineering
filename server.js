@@ -1,77 +1,80 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const path = require('path');
-const fs = require('fs'); // مكتبة إدارة الملفات في النظام
+const cors = require('cors');
+const dotenv = require('dotenv');
+
+// 1️⃣ تشغيل إعدادات البيئة (للقراءة محلياً من ملف .env)
+dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-// تحديد مسار ملف حفظ البيانات على جهازك
-const filePath = path.join(__dirname, 'appointments.json');
+// 2️⃣ الـ Middlewares الأساسية لضمان عمل واجهتك وحمايتها
+app.use(cors()); // لتجنب مشاكل الـ CORS بين الفرونت والباك
+app.use(express.json()); // لقراءة البيانات القادمة بصيغة JSON من الـ Form
+app.use(express.urlencoded({ extended: true })); // لقراءة بيانات الـ Forms التقليدية
 
-// تفعيل ميزة قراءة البيانات القادمة من الاستمارات (Forms)
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// 3️⃣ تخديم الملفات الثابتة (الفرونت إيند: CSS, JS, الصور، وصفحات الـ HTML)
+// تأكد أن ملفات واجهتك الأمامية موجودة داخل مجلد اسمه 'public' أو عدل الاسم بالأسفل
+app.use(express.static(path.join(__dirname, 'public')));
 
-// إخبار الخادم بأن يقدم ملفات الواجهة تلقائياً
-app.use(express.static(path.join(__dirname)));
+// 4️⃣ 🌐 الاتصال الذكي بقاعدة البيانات (السحابية على ريندر، والمحلية كبديل)
+const dbURI = process.env.MONGO_URI || 'mongodb://localhost:27017/FatEngineering';
 
-// 1. استقبال الحجوزات وحفظها في ملف JSON محلي
-app.post('/api/booking', (req, res) => {
-    try {
-        const { fullName, serviceType, appointmentDate, appointmentTime } = req.body;
-        
-        const newAppointment = {
-            id: Date.now(), // معرّف فريد يعتمد على الوقت بالملي ثانية
-            fullName,
-            serviceType,
-            date: appointmentDate,
-            time: appointmentTime,
-            createdAt: new Date()
-        };
+mongoose.connect(dbURI)
+  .then(() => {
+    console.log('======================================================');
+    console.log('✅ تم الاتصال بنجاح بقاعدة بيانات MongoDB السحابية (Atlas)!');
+    console.log('======================================================');
+  })
+  .catch((err) => {
+    console.error('❌ خطأ فادح في الاتصال بقاعدة البيانات: ', err.message);
+  });
 
-        let appointments = [];
-
-        // التحقق مما إذا كان الملف موجوداً مسبقاً لقراءة البيانات القديمة منه
-        if (fs.existsSync(filePath)) {
-            const fileData = fs.readFileSync(filePath, 'utf-8');
-            // إذا كان الملف غير فارغ، قم بتحويل النص إلى مصفوفة
-            if (fileData.trim() !== '') {
-                appointments = JSON.parse(fileData);
-            }
-        }
-
-        // إضافة الحجز الجديد للمصفوفة
-        appointments.push(newAppointment);
-
-        // كتابة المصفوفة المحدثة داخل الملف بشكل منسق ومقروء
-        fs.writeFileSync(filePath, JSON.stringify(appointments, null, 2), 'utf-8');
-        
-        console.log("📥 تم حفظ حجز جديد في ملف appointments.json بنجاح:", newAppointment);
-        res.json({ success: true, message: "تم حفظ الحجز بنجاح محلياً!" });
-
-    } catch (error) {
-        console.error("❌ خطأ أثناء حفظ الحجز محلياً:", error);
-        res.status(500).json({ success: false, message: "حدث خطأ في الخادم المحلي" });
-    }
+// 5️⃣ 📋 الـ Schemas والـ Models (مثال لهيكل طلب الصيانة أو المواعيد)
+// عدّل الحقول هنا بناءً على المدخلات المو جودة في واجهتك (الاسم، الخدمة، التاريخ، إلخ)
+const AppointmentSchema = new mongoose.Schema({
+  clientName: { type: String, required: true },
+  serviceType: { type: String, required: true },
+  visitDate: { type: String, required: true },
+  arrivalTime: { type: String, required: true },
+  createdAt: { type: Date, default: Date.now }
 });
 
-// 2. جلب كافة الحجوزات من الملف المحلي لعرضها
-app.get('/api/appointments', (req, res) => {
-    if (fs.existsSync(filePath)) {
-        const fileData = fs.readFileSync(filePath, 'utf-8');
-        if (fileData.trim() !== '') {
-            return res.json(JSON.parse(fileData));
-        }
-    }
-    res.json([]);
+const Appointment = mongoose.model('Appointment', AppointmentSchema);
+
+// 6️⃣ 🛠️ الـ Routes (نقاط استقبال البيانات من الفرونت إيند)
+
+// أ) استقبال طلب صيانة جديد وحفظه في الـ Atlas
+app.post('/api/maintenance', async (req, res) => {
+  try {
+    const { clientName, serviceType, visitDate, arrivalTime } = req.body;
+
+    // إنشاء سجل جديد في قاعدة البيانات
+    const newAppointment = new Appointment({
+      clientName,
+      serviceType,
+      visitDate,
+      arrivalTime
+    });
+
+    await newAppointment.save();
+    
+    // إرسال رد نجاح للفرونت إيند لكي يخفي الرسالة الحمراء ويظهر نجاحاً
+    res.status(201).json({ success: true, message: 'تم تسجيل طلب الصيانة بنجاح!' });
+  } catch (error) {
+    console.error('حدث خطأ أثناء الحفظ:', error.message);
+    res.status(500).json({ success: false, message: 'حدث خطأ داخلي في السيرفر!' });
+  }
 });
 
-// مسار خاص لفتح لوحة التحكم بسهولة
-app.get('/dashboard', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dashboard.html'));
+// ب) تخديم الصفحة الرئيسية عند دخول أي شخص للرابط
+app.get('*', (path, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// تشغيل الخادم
+// 7️⃣ 🚀 تشغيل السيرفر على البورت الديناميكي لـ Render
+const PORT = process.env.PORT || 10000; // ريندر يفضل بورت 10000 تلقائياً
 app.listen(PORT, () => {
-    console.log(`🚀 الخادم الميكانيكي الذكي يعمل الآن محلياً ومستقر 100% على: http://localhost:${PORT}`);
+  console.log(`🚀 السيرفر يعمل الآن بنجاح وعالمياً على المنفذ: ${PORT}`);
 });
