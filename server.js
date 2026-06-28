@@ -11,9 +11,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🌐 1. تخديم الملفات الثابتة في الأعلى مباشرة قبل أي مسار آخر
-app.use(express.static(__dirname));
-
 // رابط قاعدة البيانات السحابية
 const dbURI = process.env.MONGO_URI || 'mongodb://localhost:27017/FatEngineering';
 
@@ -31,6 +28,18 @@ const AppointmentSchema = new mongoose.Schema({
 });
 
 const Appointment = mongoose.model('Appointment', AppointmentSchema);
+
+// 🛠️ تخديم صريح وقاطع لملف الـ CSS مع توضيح الـ Type للمتصفح
+app.get('/style.css', (req, res) => {
+  res.setHeader('Content-Type', 'text/css');
+  res.sendFile(path.join(__dirname, 'style.css'));
+});
+
+// 🛠️ تخديم صريح وقاطع لملف الـ JS
+app.get('/script.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, 'script.js'));
+});
 
 // استقبال طلبات الحجز من المتصفح وحفظها
 app.post('/api/maintenance', async (req, res) => {
@@ -52,7 +61,7 @@ app.post('/api/maintenance', async (req, res) => {
   }
 });
 
-// 🌐 2. تخديم صفحة index.html فقط عند طلب الرابط الرئيسي للموقع مباشرة
+// تخديم صفحة index.html عند طلب الرابط الرئيسي فقط
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
