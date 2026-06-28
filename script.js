@@ -4,15 +4,13 @@ if (maintenanceForm) {
     maintenanceForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        // سحب البيانات من حقول الإدخال بناءً على الـ ID في الـ HTML
         const clientName = document.getElementById('clientName').value;
         const serviceType = document.getElementById('serviceType').value;
         const visitDate = document.getElementById('visitDate').value;
         const arrivalTime = document.getElementById('arrivalTime').value;
 
         try {
-            // إرسال البيانات برابط موقعك على Render لضمان الاتصال القطعي
-            const response = await fetch('https://fatengineering.onrender.com/api/maintenance', {
+            const response = await fetch('/api/maintenance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -29,7 +27,7 @@ if (maintenanceForm) {
 
             if (data.success) {
                 alert('🎉 تم تأكيد طلب الصيانة الفوري بنجاح وحفظه سحابياً!');
-                maintenanceForm.reset(); // تفريغ الفورم بعد النجاح
+                maintenanceForm.reset();
             } else {
                 alert('❌ حدث خطأ أثناء الحجز: ' + data.message);
             }
