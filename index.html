@@ -3,66 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FatEng</title>
-    <link rel="stylesheet" href="style.css"> 
+    <title>منصة الذكية الشاملة | FatEng</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div class="fixed-background-container">
+        <div id="bg-welcome" class="bg-layer active-bg"></div>
+        <div class="live-color-overlay"></div>
+    </div>
+
     <header>
-        <div class="navbar">
-            <div class="logo">FatEng <span>📐</span></div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">الرئيسية</a></li>
-                    <li><a href="#">من نحن</a></li>
-                    <li><a href="#">طاقم المهندسين</a></li>
-                    <li><a href="#">حجز موعد</a></li>
-                    <li><a href="#">اتصل بنا</a></li>
-                </ul>
-            </nav>
-            <button class="logout-btn">خروج</button>
+        <div class="container">
+            <div class="logo-area">
+                <div class="tech-logo">
+                    <span class="gear-center">⚙️</span>
+                    <div class="gear-tooth"></div>
+                    <div class="gear-tooth"></div>
+                </div>
+                <div class="brand-name">Fat<span class="green-text">Eng</span></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item active">الرئيسية</a></li>
+                <li><a href="#" class="nav-item">من نحن</a></li>
+                <li><a href="#" class="nav-item">طاقم المهندسين</a></li>
+                <li><a href="#" class="nav-item">حجز موعد</a></li>
+                <li><a href="#" class="nav-item">اتصل بنا</a></li>
+                <li><a href="#" class="logout-btn">خروج</a></li>
+            </ul>
         </div>
     </header>
 
-    <main class="container">
-        <div class="form-card">
-            <h2>جدولة طلب صيانة هندسية</h2>
-            <p class="subtitle">أدخل تفاصيل الخدمة لتخصيص المهندس المناسب فوراً</p>
-
-            <form id="maintenanceForm">
-                
-                <div class="input-group">
-                    <label for="clientName">👤 الاسم الثلاثي للعميل</label>
-                    <input type="text" id="clientName" name="clientName" placeholder="عمر فؤاد المحمد" required>
+    <div class="scroll-snap-container">
+        <section class="page-section">
+            
+            <div class="cyber-booking-card">
+                <div class="card-header">
+                    <span class="pulse-dot"></span>
+                    <h2>جدولة طلب صيانة هندسية</h2>
+                    <p>أدخل تفاصيل الخدمة لتخصيص المهندس المناسب فوراً</p>
                 </div>
 
-                <div class="input-group">
-                    <label for="serviceType">⚡ اختر نوع الخدمة الهندسية</label>
-                    <select id="serviceType" name="serviceType" required>
-                        <option value="" disabled selected>اختر الخدمة المطوبة...</option>
-                        <option value="إصلاح سلم أو درج ميكانيكي متحرك">إصلاح سلم أو درج ميكانيكي متحرك</option>
-                        <option value="صيانة أنظمة تكييف مركزي">صيانة أنظمة تكييف مركزي</option>
-                        <option value="استشارة هندسية ومخططات">استشارة هندسية ومخططات</option>
-                        <option value="صيانة وإصلاح مولدات طاقة">صيانة وإصلاح مولدات طاقة</option>
-                    </select>
-                </div>
-
-                <div class="row">
-                    <div class="input-group col">
-                        <label for="visitDate">📅 تاريخ الزيارة</label>
-                        <input type="date" id="visitDate" name="visitDate" required>
+                <form id="maintenanceForm" class="cyber-form">
+                    <div class="form-group-modern">
+                        <input type="text" id="clientName" name="clientName" placeholder=" " required>
+                        <span class="input-bar"></span>
+                        <label for="clientName">👤 الاسم الثلاثي للعميل</label>
                     </div>
 
-                    <div class="input-group col">
-                        <label for="arrivalTime">⏰ توقيت الوصول</label>
-                        <input type="time" id="arrivalTime" name="arrivalTime" required>
+                    <div class="form-group-modern select-group">
+                        <select id="serviceType" name="serviceType" required>
+                            <option value="" disabled selected hidden></option>
+                            <option value="إصلاح سلم أو درج ميكانيكي متحرك">إصلاح سلم أو درج ميكانيكي متحرك</option>
+                            <option value="صيانة أنظمة تكييف مركزي">صيانة أنظمة تكييف مركزي</option>
+                            <option value="استشارة هندسية ومخططات">استشارة هندسية ومخططات</option>
+                            <option value="صيانة وإصلاح مولدات طاقة">صيانة وإصلاح مولدات طاقة</option>
+                        </select>
+                        <span class="input-bar"></span>
+                        <label for="serviceType">⚡ اختر نوع الخدمة الهندسية</label>
                     </div>
-                </div>
 
-                <button type="submit" class="submit-btn">تأكيد طلب الصيانة الفوري</button>
-            </form>
-        </div>
-    </main>
+                    <div class="form-grid-2">
+                        <div class="form-group-modern">
+                            <input type="date" id="visitDate" name="visitDate" required>
+                            <span class="input-bar"></span>
+                            <label for="visitDate">📅 تاريخ الزيارة</label>
+                        </div>
+
+                        <div class="form-group-modern">
+                            <input type="time" id="arrivalTime" name="arrivalTime" required>
+                            <span class="input-bar"></span>
+                            <label for="arrivalTime">⏰ توقيت الوصول</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="cyber-submit-btn">تأكيد طلب الصيانة الفوري</button>
+                </form>
+            </div>
+
+        </section>
+    </div>
+
+    <div id="toastNotification" class="toast-hidden">
+        <span>✅</span>
+        <span id="toastMessage">تم حفظ البيانات بنجاح!</span>
+    </div>
 
     <script src="script.js"></script>
 </body>
