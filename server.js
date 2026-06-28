@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🌐 السطر السحري: تخديم ملفات الـ CSS والـ JS تلقائياً وبنوع الملف الصحيح من المجلد الرئيسي
+// 🌐 1. تخديم الملفات الثابتة في الأعلى مباشرة قبل أي مسار آخر
 app.use(express.static(__dirname));
 
 // رابط قاعدة البيانات السحابية
@@ -52,7 +52,7 @@ app.post('/api/maintenance', async (req, res) => {
   }
 });
 
-// تخديم صفحة index.html عند طلب الرابط الرئيسي للموقع
+// 🌐 2. تخديم صفحة index.html فقط عند طلب الرابط الرئيسي للموقع مباشرة
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
