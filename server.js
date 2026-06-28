@@ -29,15 +29,15 @@ const AppointmentSchema = new mongoose.Schema({
 
 const Appointment = mongoose.model('Appointment', AppointmentSchema);
 
-// 🛠️ تخديم صريح وقاطع لملف الـ CSS مع توضيح الـ Type للمتصفح
+// 🛠️ الحل الحاسم: تخديم ملف الـ CSS صراحةً مع إجبار المتصفح على قراءته كـ ستايل
 app.get('/style.css', (req, res) => {
-  res.setHeader('Content-Type', 'text/css');
+  res.header('Content-Type', 'text/css');
   res.sendFile(path.join(__dirname, 'style.css'));
 });
 
-// 🛠️ تخديم صريح وقاطع لملف الـ JS
+// 🛠️ تخديم ملف الـ JS صراحةً مع إجبار المتصفح على قراءته كـ سكريبت
 app.get('/script.js', (req, res) => {
-  res.setHeader('Content-Type', 'application/javascript');
+  res.header('Content-Type', 'application/javascript');
   res.sendFile(path.join(__dirname, 'script.js'));
 });
 
@@ -61,7 +61,7 @@ app.post('/api/maintenance', async (req, res) => {
   }
 });
 
-// تخديم صفحة index.html عند طلب الرابط الرئيسي فقط
+// تخديم صفحة index.html عند طلب الرابط الرئيسي للموقع
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
